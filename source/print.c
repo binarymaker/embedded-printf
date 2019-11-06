@@ -26,13 +26,16 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
+char* printBuffer;
+uint8_t printBufIndex;
+uint8_t printBufSize;
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
 
 
-static void
-PRINT_PutString(char *str)
+void
+PRINT_String(char *str)
 {
   uint16_t chIdx_i16 = 0;
 
@@ -59,14 +62,8 @@ PRINT_IntegerToAscii(int32_t number,
 
   num = number;
   
- /// if (zeropad_length)
-  {
-  //  buffer_limit = zeropad_length;
-  }
- // else
-  {
-    buffer_limit = 32; //TODO : macro
-  }
+
+  buffer_limit = 32; //TODO : macro
 
   if ((num < 0) && (radix == RADIX_DEC))
   {
@@ -194,7 +191,7 @@ PRINT_Printf(const char *argList, ...)
                               RADIX_DEC, 
                               numOfDigitToPrint_u8,
                               isZeroPadding_b);
-          PRINT_PutString(convBuffer);
+          PRINT_String(convBuffer);
           break;
 
         case 'D':
@@ -204,7 +201,7 @@ PRINT_Printf(const char *argList, ...)
                               RADIX_DEC,
                               numOfDigitToPrint_u8,
                               isZeroPadding_b);
-          PRINT_PutString(convBuffer);
+          PRINT_String(convBuffer);
           break;
 
         case 'u':
@@ -214,7 +211,7 @@ PRINT_Printf(const char *argList, ...)
                               RADIX_DEC,
                               numOfDigitToPrint_u8,
                               isZeroPadding_b);
-          PRINT_PutString(convBuffer);
+          PRINT_String(convBuffer);
           break;
 
         case 'U':
@@ -224,7 +221,7 @@ PRINT_Printf(const char *argList, ...)
                               RADIX_DEC,
                               numOfDigitToPrint_u8,
                               isZeroPadding_b);
-          PRINT_PutString(convBuffer);
+          PRINT_String(convBuffer);
           break;
 
         case 'x':
@@ -234,7 +231,7 @@ PRINT_Printf(const char *argList, ...)
                               RADIX_HEX,
                               numOfDigitToPrint_u8,
                               isZeroPadding_b);
-          PRINT_PutString(convBuffer);
+          PRINT_String(convBuffer);
           break;
 
         case 'X':
@@ -244,7 +241,7 @@ PRINT_Printf(const char *argList, ...)
                               RADIX_HEX,
                               numOfDigitToPrint_u8,
                               isZeroPadding_b);
-          PRINT_PutString(convBuffer);
+          PRINT_String(convBuffer);
           break;
 
         case 'b':
@@ -256,7 +253,7 @@ PRINT_Printf(const char *argList, ...)
                               RADIX_BIN,
                               numOfDigitToPrint_u8,
                               isZeroPadding_b);
-          PRINT_PutString(convBuffer);
+          PRINT_String(convBuffer);
           break;
 
         case 'B':
@@ -268,7 +265,7 @@ PRINT_Printf(const char *argList, ...)
                               RADIX_BIN,
                               numOfDigitToPrint_u8,
                               isZeroPadding_b);
-          PRINT_PutString(convBuffer);
+          PRINT_String(convBuffer);
           break;
 
         case 'F':
@@ -278,7 +275,7 @@ PRINT_Printf(const char *argList, ...)
         case 'S':
         case 's':
           str = va_arg(argp, char *);
-          PRINT_PutString(str);
+          PRINT_String(str);
           break;
 
         case '%':
@@ -293,4 +290,31 @@ PRINT_Printf(const char *argList, ...)
   }
 
   va_end(argp);
+}
+
+/* internal buffer */
+void
+PRINT_BufferLink(char* buffer, uint8_t size)
+{
+  printBuffer  = buffer;
+  printBufSize = size;
+  PRINT_BufferClear();
+}
+
+void
+PRINT_BufferWrite(char ch)
+{
+  printBuffer[printBufIndex] = ch;
+  printBufIndex++;
+}
+
+void
+PRINT_BufferClear()
+{
+  uint8_t i;
+  printBufIndex = 0;
+  for(i = 0; i < printBufSize; i++)
+  {
+    printBuffer[i] = 0;
+  }
 }

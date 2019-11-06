@@ -49,9 +49,6 @@ typedef enum
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
 
-void
-PRINT_Channel(PrintChannel_et channel);
-
 uint32_t
 PRINT_IntegerToAscii(int32_t number,
                      char *buffer,
@@ -59,8 +56,20 @@ PRINT_IntegerToAscii(int32_t number,
                      uint8_t zeropad_length,
                      uint8_t isZeroPadding_b);
 
+void
+PRINT_String(char *str);
+
 void 
 PRINT_Printf(const char *argList, ...);
+
+void
+PRINT_BufferLink(char* buffer, uint8_t size);
+
+void
+PRINT_BufferWrite(char ch);
+
+void
+PRINT_BufferClear();
 
 #ifdef __cplusplus
 }

@@ -20,6 +20,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "print-cfg.h"
+#include "stdint.h"
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -29,7 +30,7 @@ static PrintChannel_et print_channel;
 /* Private functions ---------------------------------------------------------*/
 
 void
-PRINT_ChannelSet(PrintChannel_et channel)
+PRINT_ChannelSelect(PrintChannel_et channel)
 {
   print_channel = channel;
 }
@@ -40,9 +41,10 @@ PRINT_PutChar(char ch)
   switch (print_channel)
   {
     case PRINT_CHANNEL_BUFFER:
-      
+      PRINT_BufferWrite(ch);
       break;
     default:
       break;
   }
 }
+

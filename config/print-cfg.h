@@ -37,6 +37,9 @@ typedef enum
 /* Exported functions ------------------------------------------------------- */
 
 void
+PRINT_ChannelSelect(PrintChannel_et channel);
+
+void
 PRINT_PutChar(char ch);
 
 #ifdef __cplusplus

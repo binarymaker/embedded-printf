@@ -33,6 +33,7 @@
     - src/**
     - ../../../source
     - ../../../config
+    - ../../../library/embclib/source/stdint
   :support:
     - test/support
 
