@@ -1,6 +1,0 @@
-[submodule "scripts"]
-	path = scripts
-	url = git@github.com:binarymaker/project-manager-tools.git
-[submodule "library/embclib"]
-	path = library/embclib
-	url = git@github.com:binarymaker/embclib.git
