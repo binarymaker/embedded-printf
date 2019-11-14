@@ -47,6 +47,12 @@ typedef enum
 
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
+#define PRINT_Sprintf(buffer,_F, ...)  {                                    \
+                                PRINT_BufferLink(buffer, sizeof(buffer));   \
+                                PRINT_OutFunction(PRINT_BufferWrite);       \
+                                PRINT_BufferClear();                        \
+                                PRINT_Printf((_F), __VA_ARGS__);            \
+                               }
 /* Exported functions ------------------------------------------------------- */
 
 uint32_t
@@ -55,6 +61,9 @@ PRINT_IntegerToAscii(int32_t number,
                      radix_et radix,
                      uint8_t zeropad_length,
                      uint8_t isZeroPadding_b);
+
+void
+PRINT_OutFunction(void (*putCharFunction)(char));
 
 void
 PRINT_String(char *str);
