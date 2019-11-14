@@ -26,13 +26,19 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-char* printBuffer;
-uint8_t printBufIndex;
-uint8_t printBufSize;
+static char* printBuffer;
+static uint8_t printBufIndex;
+static uint8_t printBufSize;
+
+static void (*PRINT_PutChar)(char);
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
-
+void
+PRINT_OutFunction(void (*putCharFunction)(char))
+{
+  PRINT_PutChar = putCharFunction;
+}
 
 void
 PRINT_String(char *str)

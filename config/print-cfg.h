@@ -27,20 +27,10 @@
 
 /* Includes ------------------------------------------------------------------*/
 /* Exported types ------------------------------------------------------------*/
-typedef enum
-{
-    PRINT_CHANNEL_BUFFER,
-    NUM_PRINT_CHANNEL       
-} PrintChannel_et;
 /* Exported constants --------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions ------------------------------------------------------- */
 
-void
-PRINT_ChannelSelect(PrintChannel_et channel);
-
-void
-PRINT_PutChar(char ch);
 
 #ifdef __cplusplus
 }
