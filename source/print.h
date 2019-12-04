@@ -57,25 +57,25 @@ typedef enum
 
 uint32_t
 PRINT_IntegerToAscii(int32_t number,
-                     char *buffer,
+                     uint8_t *buffer,
                      radix_et radix,
                      uint8_t zeropad_length,
                      uint8_t isZeroPadding_b);
 
 void
-PRINT_OutFunction(void (*putCharFunction)(char));
+PRINT_OutFunction(void (*putCharFunction)(uint8_t));
 
 void
-PRINT_String(char *str);
+PRINT_String(uint8_t *str);
 
 void 
-PRINT_Printf(const char *argList, ...);
+PRINT_Printf(const uint8_t *argList, ...);
 
 void
-PRINT_BufferLink(char* buffer, uint8_t size);
+PRINT_BufferLink(uint8_t* buffer, uint8_t size);
 
 void
-PRINT_BufferWrite(char ch);
+PRINT_BufferWrite(uint8_t ch);
 
 void
 PRINT_BufferClear();
