@@ -26,22 +26,22 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-static char* printBuffer;
+static uint8_t* printBuffer;
 static uint8_t printBufIndex;
 static uint8_t printBufSize;
 
-static void (*PRINT_PutChar)(char);
+static void (*PRINT_PutChar)(uint8_t);
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
 
 void
-PRINT_OutFunction(void (*putCharFunction)(char))
+PRINT_OutFunction(void (*putCharFunction)(uint8_t))
 {
   PRINT_PutChar = putCharFunction;
 }
 
 void
-PRINT_String(char *str)
+PRINT_String(uint8_t *str)
 {
   uint16_t chIdx_i16 = 0;
 
@@ -54,7 +54,7 @@ PRINT_String(char *str)
 
 uint32_t
 PRINT_IntegerToAscii(int32_t number,
-                     char *buffer,
+                     uint8_t *buffer,
                      radix_et radix,
                      uint8_t zeropad_length,
                      uint8_t isZeroPadding_b)
@@ -64,7 +64,7 @@ PRINT_IntegerToAscii(int32_t number,
   uint8_t is_negative = 0;
   int32_t num;
   uint8_t buffer_limit;
-  char swap;
+  uint8_t swap;
 
   num = number;
   
@@ -132,19 +132,19 @@ PRINT_IntegerToAscii(int32_t number,
 }
 
 void
-PRINT_Printf(const char *argList, ...)
+PRINT_Printf(const uint8_t *argList, ...)
 {
-  const char *ptr;
+  const uint8_t *ptr;
   va_list argp;
   int16_t num_i16;
   int32_t num_i32;
   uint16_t num_u16;
   uint32_t num_u32;
-  char *str;
-  char ch;
+  uint8_t *str;
+  uint8_t ch;
   uint8_t isZeroPadding_b = 0;
   uint8_t numOfDigitToPrint_u8;
-  char convBuffer[32];
+  uint8_t convBuffer[32];
 
   va_start(argp, argList);
 
@@ -280,7 +280,7 @@ PRINT_Printf(const char *argList, ...)
           break;
         case 'S':
         case 's':
-          str = va_arg(argp, char *);
+          str = va_arg(argp, uint8_t *);
           PRINT_String(str);
           break;
 
@@ -300,7 +300,7 @@ PRINT_Printf(const char *argList, ...)
 
 /* internal buffer */
 void
-PRINT_BufferLink(char* buffer, uint8_t size)
+PRINT_BufferLink(uint8_t* buffer, uint8_t size)
 {
   printBuffer  = buffer;
   printBufSize = size;
@@ -308,7 +308,7 @@ PRINT_BufferLink(char* buffer, uint8_t size)
 }
 
 void
-PRINT_BufferWrite(char ch)
+PRINT_BufferWrite(uint8_t ch)
 {
   printBuffer[printBufIndex] = ch;
   printBufIndex++;
