@@ -130,3 +130,26 @@ test_PaddingBinPrintf()
   PRINT_Sprintf(stringConv, "%02b", 0x0f);
   TEST_ASSERT_EQUAL_STRING("1111", stringConv);
 }
+
+void
+test_floatPrintf()
+{
+  PRINT_Sprintf(stringConv, "%01.2f", 1.23);
+  TEST_ASSERT_EQUAL_STRING("1.23", stringConv);
+
+  PRINT_Sprintf(stringConv, "%02.2f", 1.23);
+  TEST_ASSERT_EQUAL_STRING("01.23", stringConv);
+
+  PRINT_Sprintf(stringConv, "%03.4f", 1.23);
+  TEST_ASSERT_EQUAL_STRING("001.2300", stringConv);
+ 
+  PRINT_Sprintf(stringConv, "%03.4f", 0.0001);
+  TEST_ASSERT_EQUAL_STRING("000.0001", stringConv);
+
+  PRINT_Sprintf(stringConv, "%1.4f", 0.0001);
+  TEST_ASSERT_EQUAL_STRING("0.0001", stringConv);
+
+  PRINT_Sprintf(stringConv, "%1.1f", -1.9);
+  TEST_ASSERT_EQUAL_STRING("-1.9", stringConv);
+
+}
