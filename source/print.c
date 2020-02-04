@@ -144,6 +144,8 @@ PRINT_Printf(const uint8_t *argList, ...)
   uint8_t ch;
   uint8_t isZeroPadding_b = 0;
   uint8_t numOfDigitToPrint_u8;
+  uint8_t numOfFractionToPrint_u8 = 0;
+  double num_float;
   uint8_t convBuffer[32];
 
   va_start(argp, argList);
@@ -176,6 +178,23 @@ PRINT_Printf(const uint8_t *argList, ...)
           ptr++;
           ch = *ptr;
         }
+        if(ch == '.')
+        {
+          ptr++;
+          ch = *ptr;
+          numOfFractionToPrint_u8 = 0;
+          while ((ch >= '0') && (ch <= '9'))
+          {
+            numOfFractionToPrint_u8 = (numOfFractionToPrint_u8 * 10) + (ch - '0');
+            ptr++;
+            ch = *ptr;
+          }
+        }
+        else
+        {
+          numOfFractionToPrint_u8 = 0u;
+        }
+        
       }
       else
       {
@@ -276,7 +295,34 @@ PRINT_Printf(const uint8_t *argList, ...)
 
         case 'F':
         case 'f':
-          // TODO
+          num_float = va_arg(argp, double);
+          if (numOfDigitToPrint_u8 == 0xff) // todo
+          {  numOfDigitToPrint_u8 = 16; }
+          num_i32 = (int32_t)num_float;
+          uint32_t fraction_multiplier_u32 = 1;
+          for(uint8_t i_u8 = 0; i_u8 < numOfFractionToPrint_u8; i_u8++)
+          {
+            fraction_multiplier_u32 *= 10;
+          }
+          uint32_t faction_u32 = (num_float - (double)num_i32) * (fraction_multiplier_u32);
+          if(0.0 > num_float) /*-ve*/
+          {
+            faction_u32 *= -1.0;
+          }
+          
+          PRINT_IntegerToAscii(num_i32,
+                              convBuffer,
+                              RADIX_DEC,
+                              numOfDigitToPrint_u8,
+                              isZeroPadding_b);
+          PRINT_String(convBuffer);
+          PRINT_String(".");
+          PRINT_IntegerToAscii(faction_u32,
+                              convBuffer,
+                              RADIX_DEC,
+                              numOfFractionToPrint_u8,
+                              1);
+          PRINT_String(convBuffer);
           break;
         case 'S':
         case 's':
