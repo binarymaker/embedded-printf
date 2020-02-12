@@ -149,7 +149,7 @@ test_floatPrintf()
   PRINT_Sprintf(stringConv, "%1.4f", 0.0001);
   TEST_ASSERT_EQUAL_STRING("0.0001", stringConv);
 
-  PRINT_Sprintf(stringConv, "%1.1f", -1.9);
-  TEST_ASSERT_EQUAL_STRING("-1.9", stringConv);
+  PRINT_Sprintf(stringConv, "%2.1f", -1.8);
+  TEST_ASSERT_EQUAL_STRING("-1.8", stringConv);
 
 }
