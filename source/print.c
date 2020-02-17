@@ -307,7 +307,7 @@ PRINT_Printf(const uint8_t *argList, ...)
           uint32_t faction_u32 = (num_float - (double)num_i32) * (fraction_multiplier_u32);
           if(0.0 > num_float) /*-ve*/
           {
-            faction_u32 *= -1.0;
+            faction_u32 *= -1;
           }
           
           PRINT_IntegerToAscii(num_i32,
@@ -316,7 +316,7 @@ PRINT_Printf(const uint8_t *argList, ...)
                               numOfDigitToPrint_u8,
                               isZeroPadding_b);
           PRINT_String(convBuffer);
-          PRINT_String(".");
+          PRINT_PutChar(0x2E); /* [.] */
           PRINT_IntegerToAscii(faction_u32,
                               convBuffer,
                               RADIX_DEC,
