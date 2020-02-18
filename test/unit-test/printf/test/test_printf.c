@@ -153,6 +153,8 @@ test_floatPrintf()
   PRINT_Sprintf(stringConv, "%2.1f", -1.8);
   TEST_ASSERT_EQUAL_STRING("-1.8", stringConv);
 
+  PRINT_Sprintf(stringConv, "%2.1f", -0.8);
+  TEST_ASSERT_EQUAL_STRING("-0.8", stringConv);
 }
 
 void
@@ -181,4 +183,20 @@ test_SignSymbolPrintf()
 
   PRINT_Sprintf(stringConv, "%+02d", -12345);
   TEST_ASSERT_EQUAL_STRING("-12345", stringConv);
+}
+
+void
+test_SignSymbolFloatPrintf()
+{
+  PRINT_Sprintf(stringConv, "%+02.3f", 1.004);
+  TEST_ASSERT_EQUAL_STRING("+01.004", stringConv);
+
+  PRINT_Sprintf(stringConv, "%+02.3f", -1.004);
+  TEST_ASSERT_EQUAL_STRING("-01.004", stringConv);
+  
+  PRINT_Sprintf(stringConv, "%+02.3f", 0.004);
+  TEST_ASSERT_EQUAL_STRING("+00.004", stringConv);
+
+  PRINT_Sprintf(stringConv, "%+02.3f", -0.004);
+  TEST_ASSERT_EQUAL_STRING("-00.004", stringConv);
 }

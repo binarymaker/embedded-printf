@@ -22,6 +22,7 @@
 #include "print.h"
 #include "stdint.h"
 #include <stdarg.h>
+#include <stdint.h>
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
@@ -341,6 +342,15 @@ PRINT_Printf(const uint8_t *argList, ...)
           if(0.0 > num_float) /*-ve*/
           {
             faction_u32 *= -1;
+            if (num_i32 == 0)
+            {
+              PRINT_PutChar('-');
+              sign_notation_b = 0; 
+              if (!isZeroPadding_b)
+              {
+                numOfDigitToPrint_u8 = 1;
+              }
+            }
           }
           
           PRINT_IntegerToAscii(num_i32,
@@ -356,7 +366,7 @@ PRINT_Printf(const uint8_t *argList, ...)
                               RADIX_DEC,
                               numOfFractionToPrint_u8,
                               1,
-                              sign_notation_b);
+                              0);
           PRINT_String(convBuffer);
           break;
         case 'S':
