@@ -21,6 +21,7 @@
 #include "unity.h"
 #include "print.h"
 #include "print-cfg.h"
+#include <stdint.h>
 
 char stringConv[50];
 int numOfPrintChar;
@@ -152,4 +153,32 @@ test_floatPrintf()
   PRINT_Sprintf(stringConv, "%2.1f", -1.8);
   TEST_ASSERT_EQUAL_STRING("-1.8", stringConv);
 
+}
+
+void
+test_SignSymbolPrintf()
+{
+  PRINT_Sprintf(stringConv, "%+d", 5);
+  TEST_ASSERT_EQUAL_STRING("+5", stringConv);
+
+  PRINT_Sprintf(stringConv, "%+d", -5);
+  TEST_ASSERT_EQUAL_STRING("-5", stringConv);
+ 
+  PRINT_Sprintf(stringConv, "%+5d", 5);
+  TEST_ASSERT_EQUAL_STRING("+    5", stringConv);
+
+  PRINT_Sprintf(stringConv, "%+5d", -5);
+  TEST_ASSERT_EQUAL_STRING("-    5", stringConv);
+
+  PRINT_Sprintf(stringConv, "%+05d", 5);
+  TEST_ASSERT_EQUAL_STRING("+00005", stringConv);
+
+  PRINT_Sprintf(stringConv, "%+05d", -5);
+  TEST_ASSERT_EQUAL_STRING("-00005", stringConv);
+
+  PRINT_Sprintf(stringConv, "%+02d", 12345);
+  TEST_ASSERT_EQUAL_STRING("+12345", stringConv);
+
+  PRINT_Sprintf(stringConv, "%+02d", -12345);
+  TEST_ASSERT_EQUAL_STRING("-12345", stringConv);
 }

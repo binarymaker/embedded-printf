@@ -57,7 +57,8 @@ PRINT_IntegerToAscii(int32_t number,
                      uint8_t *buffer,
                      radix_et radix,
                      uint8_t zeropad_length,
-                     uint8_t isZeroPadding_b)
+                     uint8_t isZeroPadding_b,
+                     uint8_t sign_notation_b)
 {
   uint8_t i = 0;
   uint16_t len = 0;
@@ -75,7 +76,7 @@ PRINT_IntegerToAscii(int32_t number,
   {
     num = -num;
     is_negative = 1;
-    if (zeropad_length && (0 != isZeroPadding_b))
+    if (zeropad_length && isZeroPadding_b && !sign_notation_b)
     {
       zeropad_length--;
     }
@@ -101,14 +102,14 @@ PRINT_IntegerToAscii(int32_t number,
        buffer[len++] = '0';
     }
 
-    if (is_negative && (buffer_limit > len))
+    if (is_negative && (buffer_limit > len) && !sign_notation_b)
     {
       buffer[len++] = '-';
     }
   }
   else
   {
-    if (is_negative && (buffer_limit > len))
+    if (is_negative && (buffer_limit > len) && !sign_notation_b)
     {
       buffer[len++] = '-';
     }
@@ -116,6 +117,18 @@ PRINT_IntegerToAscii(int32_t number,
     for (i = len; i < zeropad_length; i++)
     {
        buffer[len++] = ' ';
+    }
+  }
+
+  if (sign_notation_b && (radix == RADIX_DEC))
+  {
+    if (is_negative)
+    {
+      buffer[len++] = '-';
+    }
+    else
+    {
+      buffer[len++] = '+';
     }
   }
 
@@ -143,6 +156,7 @@ PRINT_Printf(const uint8_t *argList, ...)
   uint8_t *str;
   uint8_t ch;
   uint8_t isZeroPadding_b = 0;
+  uint8_t sign_notation_b = 0;
   uint8_t numOfDigitToPrint_u8;
   uint8_t numOfFractionToPrint_u8 = 0;
   double num_float;
@@ -158,6 +172,17 @@ PRINT_Printf(const uint8_t *argList, ...)
     {
       ptr++;
       ch = *ptr;
+
+      if (ch == '+')
+      {
+        sign_notation_b = 1;
+        ptr++;
+        ch = *ptr;
+      }
+      else {
+        sign_notation_b = 0;
+      }
+
       if ((ch >= '0') && (ch <= '9'))
       {
         if (ch == '0')
@@ -215,7 +240,8 @@ PRINT_Printf(const uint8_t *argList, ...)
                               convBuffer, 
                               RADIX_DEC, 
                               numOfDigitToPrint_u8,
-                              isZeroPadding_b);
+                              isZeroPadding_b,
+                              sign_notation_b);
           PRINT_String(convBuffer);
           break;
 
@@ -225,7 +251,8 @@ PRINT_Printf(const uint8_t *argList, ...)
                               convBuffer,
                               RADIX_DEC,
                               numOfDigitToPrint_u8,
-                              isZeroPadding_b);
+                              isZeroPadding_b,
+                              sign_notation_b);
           PRINT_String(convBuffer);
           break;
 
@@ -235,7 +262,8 @@ PRINT_Printf(const uint8_t *argList, ...)
                               convBuffer,
                               RADIX_DEC,
                               numOfDigitToPrint_u8,
-                              isZeroPadding_b);
+                              isZeroPadding_b,
+                              sign_notation_b);
           PRINT_String(convBuffer);
           break;
 
@@ -245,7 +273,8 @@ PRINT_Printf(const uint8_t *argList, ...)
                               convBuffer,
                               RADIX_DEC,
                               numOfDigitToPrint_u8,
-                              isZeroPadding_b);
+                              isZeroPadding_b,
+                              sign_notation_b);
           PRINT_String(convBuffer);
           break;
 
@@ -255,7 +284,8 @@ PRINT_Printf(const uint8_t *argList, ...)
                               convBuffer,
                               RADIX_HEX,
                               numOfDigitToPrint_u8,
-                              isZeroPadding_b);
+                              isZeroPadding_b,
+                              sign_notation_b);
           PRINT_String(convBuffer);
           break;
 
@@ -265,7 +295,8 @@ PRINT_Printf(const uint8_t *argList, ...)
                               convBuffer,
                               RADIX_HEX,
                               numOfDigitToPrint_u8,
-                              isZeroPadding_b);
+                              isZeroPadding_b,
+                              sign_notation_b);
           PRINT_String(convBuffer);
           break;
 
@@ -277,7 +308,8 @@ PRINT_Printf(const uint8_t *argList, ...)
                               convBuffer,
                               RADIX_BIN,
                               numOfDigitToPrint_u8,
-                              isZeroPadding_b);
+                              isZeroPadding_b,
+                              sign_notation_b);
           PRINT_String(convBuffer);
           break;
 
@@ -289,7 +321,8 @@ PRINT_Printf(const uint8_t *argList, ...)
                               convBuffer,
                               RADIX_BIN,
                               numOfDigitToPrint_u8,
-                              isZeroPadding_b);
+                              isZeroPadding_b,
+                              sign_notation_b);
           PRINT_String(convBuffer);
           break;
 
@@ -314,14 +347,16 @@ PRINT_Printf(const uint8_t *argList, ...)
                               convBuffer,
                               RADIX_DEC,
                               numOfDigitToPrint_u8,
-                              isZeroPadding_b);
+                              isZeroPadding_b,
+                              sign_notation_b);
           PRINT_String(convBuffer);
-          PRINT_PutChar(0x2E); /* [.] */
+          PRINT_PutChar('.');
           PRINT_IntegerToAscii(faction_u32,
                               convBuffer,
                               RADIX_DEC,
                               numOfFractionToPrint_u8,
-                              1);
+                              1,
+                              sign_notation_b);
           PRINT_String(convBuffer);
           break;
         case 'S':

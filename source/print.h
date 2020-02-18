@@ -60,7 +60,8 @@ PRINT_IntegerToAscii(int32_t number,
                      uint8_t *buffer,
                      radix_et radix,
                      uint8_t zeropad_length,
-                     uint8_t isZeroPadding_b);
+                     uint8_t isZeroPadding_b,
+                     uint8_t sign_notation_b);
 
 void
 PRINT_OutFunction(void (*putCharFunction)(uint8_t));

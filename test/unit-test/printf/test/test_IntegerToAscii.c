@@ -42,12 +42,12 @@ test_simpleNumberConv()
 {
 
 
-  numOfPrintChar = PRINT_IntegerToAscii(0, stringConv, RADIX_DEC, 0, 0);
+  numOfPrintChar = PRINT_IntegerToAscii(0, stringConv, RADIX_DEC, 0, 0, 0);
   
   TEST_ASSERT_EQUAL(1, numOfPrintChar);
   TEST_ASSERT_EQUAL_STRING("0", stringConv);
 
-  numOfPrintChar = PRINT_IntegerToAscii(1290, stringConv, RADIX_DEC, 0, 0);
+  numOfPrintChar = PRINT_IntegerToAscii(1290, stringConv, RADIX_DEC, 0, 0, 0);
   
   TEST_ASSERT_EQUAL(4, numOfPrintChar);
   TEST_ASSERT_EQUAL_STRING("1290", stringConv);
@@ -56,17 +56,17 @@ test_simpleNumberConv()
 void
 test_nagativeNumConv()
 {
-   numOfPrintChar = PRINT_IntegerToAscii(-0, stringConv, RADIX_DEC, 0, 0);
+   numOfPrintChar = PRINT_IntegerToAscii(-0, stringConv, RADIX_DEC, 0, 0, 0);
   
   TEST_ASSERT_EQUAL(1, numOfPrintChar);
   TEST_ASSERT_EQUAL_STRING("0", stringConv);
 
-  numOfPrintChar = PRINT_IntegerToAscii(-25, stringConv, RADIX_DEC, 0, 0);
+  numOfPrintChar = PRINT_IntegerToAscii(-25, stringConv, RADIX_DEC, 0, 0, 0);
   
   TEST_ASSERT_EQUAL(3, numOfPrintChar);
   TEST_ASSERT_EQUAL_STRING("-25", stringConv);
 
-  numOfPrintChar = PRINT_IntegerToAscii(-1290, stringConv, RADIX_DEC, 0, 0);
+  numOfPrintChar = PRINT_IntegerToAscii(-1290, stringConv, RADIX_DEC, 0, 0, 0);
   
   TEST_ASSERT_EQUAL(5, numOfPrintChar);
   TEST_ASSERT_EQUAL_STRING("-1290", stringConv);
@@ -75,17 +75,17 @@ test_nagativeNumConv()
 void
 test_paddingNumConv()
 {
-  numOfPrintChar = PRINT_IntegerToAscii(0, stringConv, RADIX_DEC, 5, 0);
+  numOfPrintChar = PRINT_IntegerToAscii(0, stringConv, RADIX_DEC, 5, 0, 0);
   
   TEST_ASSERT_EQUAL(5, numOfPrintChar);
   TEST_ASSERT_EQUAL_STRING("    0", stringConv);
 
-  numOfPrintChar = PRINT_IntegerToAscii(123, stringConv, RADIX_DEC, 5, 0);
+  numOfPrintChar = PRINT_IntegerToAscii(123, stringConv, RADIX_DEC, 5, 0, 0);
   
   TEST_ASSERT_EQUAL(5, numOfPrintChar);
   TEST_ASSERT_EQUAL_STRING("  123", stringConv);
 
-  numOfPrintChar = PRINT_IntegerToAscii(98765, stringConv, RADIX_DEC, 3, 0);
+  numOfPrintChar = PRINT_IntegerToAscii(98765, stringConv, RADIX_DEC, 3, 0, 0);
   
   TEST_ASSERT_EQUAL(5, numOfPrintChar);
   TEST_ASSERT_EQUAL_STRING("98765", stringConv);
@@ -94,12 +94,12 @@ test_paddingNumConv()
 void
 test_paddingNegativeNumConv()
 {
-  numOfPrintChar = PRINT_IntegerToAscii(-123, stringConv, RADIX_DEC, 5, 0);
+  numOfPrintChar = PRINT_IntegerToAscii(-123, stringConv, RADIX_DEC, 5, 0, 0);
   
   TEST_ASSERT_EQUAL(5, numOfPrintChar);
   TEST_ASSERT_EQUAL_STRING(" -123", stringConv);
 
-  numOfPrintChar = PRINT_IntegerToAscii(-98765, stringConv, RADIX_DEC, 3, 0);
+  numOfPrintChar = PRINT_IntegerToAscii(-98765, stringConv, RADIX_DEC, 3, 0, 0);
   
   TEST_ASSERT_EQUAL(6, numOfPrintChar);
   TEST_ASSERT_EQUAL_STRING("-98765", stringConv);
@@ -108,17 +108,17 @@ test_paddingNegativeNumConv()
 void
 test_zeroPaddingNumConv()
 {
-  numOfPrintChar = PRINT_IntegerToAscii(0, stringConv, RADIX_DEC, 5, 1);
+  numOfPrintChar = PRINT_IntegerToAscii(0, stringConv, RADIX_DEC, 5, 1, 0);
   
   TEST_ASSERT_EQUAL(5, numOfPrintChar);
   TEST_ASSERT_EQUAL_STRING("00000", stringConv);
 
-  numOfPrintChar = PRINT_IntegerToAscii(123, stringConv, RADIX_DEC, 5, 1);
+  numOfPrintChar = PRINT_IntegerToAscii(123, stringConv, RADIX_DEC, 5, 1, 0);
   
   TEST_ASSERT_EQUAL(5, numOfPrintChar);
   TEST_ASSERT_EQUAL_STRING("00123", stringConv);
 
-  numOfPrintChar = PRINT_IntegerToAscii(98765, stringConv, RADIX_DEC, 3, 1);
+  numOfPrintChar = PRINT_IntegerToAscii(98765, stringConv, RADIX_DEC, 3, 1, 0);
   
   TEST_ASSERT_EQUAL(5, numOfPrintChar);
   TEST_ASSERT_EQUAL_STRING("98765", stringConv);
@@ -127,13 +127,23 @@ test_zeroPaddingNumConv()
 void
 test_ZeroPaddingNegativeNumConv()
 {
-  numOfPrintChar = PRINT_IntegerToAscii(-123, stringConv, RADIX_DEC, 5, 1);
+  numOfPrintChar = PRINT_IntegerToAscii(-123, stringConv, RADIX_DEC, 5, 1, 0);
   
   TEST_ASSERT_EQUAL(5, numOfPrintChar);
   TEST_ASSERT_EQUAL_STRING("-0123", stringConv);
 
-  numOfPrintChar = PRINT_IntegerToAscii(-98765, stringConv, RADIX_DEC, 3, 1);
+  numOfPrintChar = PRINT_IntegerToAscii(-98765, stringConv, RADIX_DEC, 3, 1, 0);
   
   TEST_ASSERT_EQUAL(6, numOfPrintChar);
   TEST_ASSERT_EQUAL_STRING("-98765", stringConv);
+}
+
+void
+test_signPaddingNegativeNumConv()
+{
+  numOfPrintChar = PRINT_IntegerToAscii(123, stringConv, RADIX_DEC, 0, 0, 1);
+  
+  TEST_ASSERT_EQUAL(4, numOfPrintChar);
+  TEST_ASSERT_EQUAL_STRING("+123", stringConv);
+
 }
