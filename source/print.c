@@ -316,7 +316,7 @@ PRINT_Printf(const uint8_t *argList, ...)
                               numOfDigitToPrint_u8,
                               isZeroPadding_b);
           PRINT_String(convBuffer);
-          PRINT_String(".");
+          PRINT_PutChar(0x2E); /* [.] */
           PRINT_IntegerToAscii(faction_u32,
                               convBuffer,
                               RADIX_DEC,
